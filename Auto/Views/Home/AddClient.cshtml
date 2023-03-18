@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Client Registration";
+}
+
+<form asp-controller="Home" asp-action="CreateClient" method="post">
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" placeholder="ClientName" name="fname">
+                <label for="floatingInput">ClientName</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" placeholder="ClientSName" name="sname">
+                <label for="floatingInput">ClientSName</label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br /> <button type="submit" class="btn btn-outline-primary">Save</button>
+
+</form>

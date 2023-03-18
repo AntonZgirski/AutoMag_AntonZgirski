@@ -1,0 +1,30 @@
+﻿@model List<Client> 
+@{
+  ViewData["Title"] = "Client"; 
+}
+
+<table class="table"> 
+    <tr>
+        <th>Name</th>
+        <th>SecondName</th>
+        <th></th>
+    </tr>
+  @foreach (var item in Model)
+  {
+          <tr>
+              <td>
+        @Html.DisplayFor(modelItem => item.ClientName)
+              </td>
+              <td>
+        @Html.DisplayFor(modelItem => item.ClientSname)
+              </td>
+              <td>
+        @Html.ActionLink("Delete", "DeleteClient", new { id = item.ClaentId , name = ViewData["Title"]})
+              </td>
+          </tr>
+  } 
+ </table>
+
+ <p>
+  @Html.ActionLink("Add Client", "AddClient")
+</p>

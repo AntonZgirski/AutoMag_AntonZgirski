@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Car Registration";
+}
+
+<form asp-controller="Home" asp-action="CreateAuto" method="post">
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" placeholder="Model" name="model">
+                <label for="floatingInput">Model</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" placeholder="Year" name="year">
+                <label for="floatingInput">Year</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" placeholder="Price" name="price">
+                <label for="floatingInput">Price</label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br /> <button type="submit" class="btn btn-outline-primary">Save</button>
+
+</form>

@@ -1,0 +1,103 @@
+﻿@model List<Auto> 
+@{
+  ViewData["Title"] = "Auto"; 
+}
+
+<table class="table"> 
+    <tr>
+        <th>Model</th>
+        <th>Year</th>
+        <th>Price</th>
+    </tr>
+  @foreach (var item in Model)
+  {
+          <tr>
+              <td>
+        @Html.DisplayFor(modelItem => item.AutoModel)
+              </td>
+              <td>
+        @Html.DisplayFor(modelItem => item.Year)
+              </td>
+              <td>
+        @Html.DisplayFor(modelItem => item.Price)
+              </td>
+              <td>
+        @Html.ActionLink("Delete", "DeleteAuto", new { id = item.AutoId , name = ViewData["Title"]})
+              </td>
+
+          </tr>
+  } 
+ </table>
+
+<br />
+
+<p>
+  @Html.ActionLink("Add Auto", "AddAuto")
+</p>
+
+
+ @*<h1>Grid</h1>
+
+ <asp:SqlDataSource ID="getAuto" runat="server"
+             ConnectionString="Server=USERPC;Database=Auto;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=True"
+             SelectCommand="SELECT AutoModel, Year, Price FROM Auto" />
+
+<GridView ID="GridView1" runat="server"
+            DataSourceID="getEmployeesSDS" AutoGenerateColumns="False" DataKeyNames="AutoID">
+            <Columns>
+                <asp:BoundField DataField="AutoModel" HeaderText="Model" />
+                <asp:BoundField DataField="Year" HeaderText="Year" />
+                <asp:BoundField DataField="Price" HeaderText="Price" />
+            </Columns>
+</GridView>*@
+
+@*<form asp-controller="Home" asp-action="Create" method="post">
+
+ <!-- Кнопка-триггер модального окна -->
+<button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  Add Auto
+</button>
+
+<!-- Модальное окно -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Auto</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" placeholder="Model" name="model">
+                        <label for="floatingInput">Model</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" placeholder="Year" name="year">
+                        <label for="floatingInput">Year</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" placeholder="Price" name="price">
+                        <label for="floatingInput">Price</label>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Don't Save</button>
+        <button type="submit" class="btn btn-outline-primary" data-bs-dismiss="modal">Save</button>        
+      </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+</form>      *@
