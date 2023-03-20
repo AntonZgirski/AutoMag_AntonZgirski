@@ -36,21 +36,6 @@
 </p>
 
 
- @*<h1>Grid</h1>
-
- <asp:SqlDataSource ID="getAuto" runat="server"
-             ConnectionString="Server=USERPC;Database=Auto;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=True"
-             SelectCommand="SELECT AutoModel, Year, Price FROM Auto" />
-
-<GridView ID="GridView1" runat="server"
-            DataSourceID="getEmployeesSDS" AutoGenerateColumns="False" DataKeyNames="AutoID">
-            <Columns>
-                <asp:BoundField DataField="AutoModel" HeaderText="Model" />
-                <asp:BoundField DataField="Year" HeaderText="Year" />
-                <asp:BoundField DataField="Price" HeaderText="Price" />
-            </Columns>
-</GridView>*@
-
 @*<form asp-controller="Home" asp-action="Create" method="post">
 
  <!-- Кнопка-триггер модального окна -->

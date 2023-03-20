@@ -14,29 +14,23 @@ namespace Auto.Controllers
     private readonly AddObject _addobj;
     public readonly IConfiguration _configuration;
 
-    public HomeController(ILogger<HomeController> logger, IConfiguration configuration, AddObject addobj)
+    public HomeController(ILogger<HomeController> logger, IConfiguration configuration)
     {
       _logger = logger;
       _configuration = configuration;
-      _addobj = addobj;
+      _addobj = new AddObject(configuration);
     }
 
     public IActionResult Client()
     {      
-      using(var context = new AutoContext(_configuration))
-      {
-        var client = context.Clients.Include(p => p.Magazines).ToList();
-        return View(client.ToList());
-      }
+      var client = _addobj.Context.Clients.Include(p => p.Magazines).ToList();
+      return View(client.ToList());
     }
 
     public IActionResult Auto()
     {      
-      using (var context = new AutoContext(_configuration))
-      {
-        var auto = context.Autos.Include(p => p.Magazines).ToList();
-        return View(auto.ToList());
-      }
+      var auto = _addobj.Context.Autos.Include(p => p.Magazines).ToList();
+      return View(auto.ToList());
     }
     
 
@@ -78,16 +72,6 @@ namespace Auto.Controllers
     {
       _addobj.Delete(_configuration, name, id);
       return RedirectToAction("Client");
-    }
-
-    public IActionResult Index()
-    {
-      return View();
-    }
-
-    public IActionResult Privacy()
-    {
-      return View();
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
