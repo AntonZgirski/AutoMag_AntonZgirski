@@ -1,5 +1,6 @@
 ﻿using Auto.Models;
 using Auto.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -12,27 +13,28 @@ namespace Auto.Controllers
   {
     private readonly ILogger<HomeController> _logger;
     private readonly AddObject _addobj;
-    public readonly IConfiguration _configuration;
 
-    public HomeController(ILogger<HomeController> logger, IConfiguration configuration)
+    public HomeController(ILogger<HomeController> logger, AddObject addObject)
     {
       _logger = logger;
-      _configuration = configuration;
-      _addobj = new AddObject(configuration);
+      _addobj = addObject;
     }
 
-    public IActionResult Client()
-    {      
-      var client = _addobj.Context.Clients.Include(p => p.Magazines).ToList();
-      return View(client.ToList());
-    }
-
-    public IActionResult Auto()
-    {      
-      var auto = _addobj.Context.Autos.Include(p => p.Magazines).ToList();
-      return View(auto.ToList());
+    
+    public IActionResult Index()
+    {
+      return View();
     }
     
+    public IActionResult Client()
+    {      
+      return View(_addobj.GetClients());
+    }
+   
+    public IActionResult Auto()
+    {            
+      return View(_addobj.GetAuto());
+    }    
 
     [HttpGet]
     public IActionResult AddAuto()
@@ -43,14 +45,19 @@ namespace Auto.Controllers
     [HttpPost]
     public IActionResult CreateAuto([FromForm] string model, [FromForm] int year, [FromForm] decimal price)
     {
-      var auto = new Auto.Models.Auto { AutoModel = model, Year = year, Price = price };
-      _addobj.Add(_configuration, auto);
+      var auto = new Auto.Models.Auto { AutoModel = model, Year = year, Price = price , Status = "Add"};
+      _addobj.Add(auto);
+      return RedirectToAction("Auto");
+    }
+
+    public IActionResult EditAuto(int id)
+    {
       return RedirectToAction("Auto");
     }
 
     public IActionResult DeleteAuto(int id, string name)
     {
-      _addobj.Delete(_configuration, name, id);
+      _addobj.Delete(name, id);
       return RedirectToAction("Auto");
     }
     
@@ -64,13 +71,13 @@ namespace Auto.Controllers
     public IActionResult CreateClient([FromForm] string fname, [FromForm] string sname)
     {
       var client = new Client { ClientName = fname, ClientSname = sname };
-      _addobj.Add(_configuration, client);
+      _addobj.Add(client);
       return RedirectToAction("Client");
     }
 
     public IActionResult DeleteClient(int id, string name)
     {
-      _addobj.Delete(_configuration, name, id);
+      _addobj.Delete(name, id);
       return RedirectToAction("Client");
     }
 

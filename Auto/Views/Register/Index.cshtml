@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+
+@*<h1>@ViewData["Title"]</h1>
+<br>*@
+<form asp-controller="Register" asp-action="Authenfic" method="post">
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" placeholder="Login" name="login">
+                <label for="floatingInput">Login</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control" placeholder="Password" name="password">
+                <label for="floatingInput">Password</label>
+            </div>
+        </div>
+    </div>
+    @if (ViewBag.Error != null)
+    {
+    <div class="row">
+        <div class="col-12">
+            <div class="alert alert-warning" role="alert">
+               @ViewBag.Error
+            </div>
+        </div>
+    </div>
+    }
+</div>
+
+<br /> <button type="submit" class="btn btn-outline-primary">Login</button>
+
+</form>

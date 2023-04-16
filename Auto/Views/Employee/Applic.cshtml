@@ -1,0 +1,54 @@
+﻿@model List<AppView>
+@{
+  ViewData["Title"] = "Appl"; 
+}
+
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">        
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Employee" asp-action="Employee">App</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Employee" asp-action="Employee">App</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+    <table class="table"> 
+        <tr>
+            <th>Name</th>
+            <th>Model</th> 
+            <th>Status</th> 
+        </tr>
+      @foreach (var item in Model)
+      {
+              <tr>
+                  <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                  </td>
+                  <td>
+                        @Html.DisplayFor(modelItem => item.Model)
+                  </td>
+                  <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                  </td>
+                  <td>
+                    @Html.ActionLink("Confirm", "ConfirmApp", new {id = item.ApplicId})|
+                    @Html.ActionLink("Reject", "RejectApp", new {id = item.ApplicId})  
+                  </td>
+              </tr>
+      } 
+     </table>
+
+    <br />
+    </header>
+</body>

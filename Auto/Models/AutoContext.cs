@@ -1,19 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Identity.Client;
 
 namespace Auto.Models;
 
 public partial class AutoContext : DbContext
 {
-  public readonly IConfiguration _configuration;
-    public AutoContext(IConfiguration configuration)
+    public AutoContext()
     {
-      _configuration = configuration;
     }
 
+    public AutoContext(DbContextOptions<AutoContext> options)
+        : base(options)
+    {
+    }
+        
+    public virtual DbSet<Application> Applications { get; set; }
 
     public virtual DbSet<Auto> Autos { get; set; }
 
@@ -25,16 +27,28 @@ public partial class AutoContext : DbContext
 
     public virtual DbSet<Role> Roles { get; set; }
 
-    public AutoContext(DbContextOptions<AutoContext> options)
-        : base(options)
-    {
-    }
+    public virtual DbSet<User> Users { get; set; }
 
-  protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-      => optionsBuilder.UseSqlServer(_configuration.GetValue<string>("ConnectionStrings:DefaultConnection"));
+//    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+//        => optionsBuilder.UseSqlServer("Data Source=USERPC;Initial Catalog=Auto;Integrated Security=True;TrustServerCertificate=True");
 
-  protected override void OnModelCreating(ModelBuilder modelBuilder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Application>(entity =>
+        {
+            entity.HasKey(e => e.ApplicId);
+
+            entity.ToTable("Application");
+
+            entity.Property(e => e.ApplicId).HasColumnName("ApplicID");
+            entity.Property(e => e.AutoId).HasColumnName("AutoID");
+            entity.Property(e => e.Status)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.UserId).HasColumnName("UserID");
+        });
+
         modelBuilder.Entity<Auto>(entity =>
         {
             entity.ToTable("Auto");
@@ -44,6 +58,9 @@ public partial class AutoContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.Price).HasColumnType("money");
+            entity.Property(e => e.Status)
+                .HasMaxLength(50)
+                .IsUnicode(false);
         });
 
         modelBuilder.Entity<Client>(entity =>
@@ -113,6 +130,31 @@ public partial class AutoContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.RoleSalary).HasColumnType("money");
+        });
+
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.HasKey(e => e.UserId).HasName("PK_User");
+
+            entity.Property(e => e.UserId).HasColumnName("UserID");
+            entity.Property(e => e.ConPasword)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.Email)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.Login)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.Password)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.RoleId).HasColumnName("RoleID");
+
+            entity.HasOne(d => d.Role).WithMany(p => p.Users)
+                .HasForeignKey(d => d.RoleId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_User_Role");
         });
 
         OnModelCreatingPartial(modelBuilder);

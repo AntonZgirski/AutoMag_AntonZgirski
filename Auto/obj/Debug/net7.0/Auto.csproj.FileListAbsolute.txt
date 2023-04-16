@@ -73,3 +73,4 @@ D:\C#\TMS\Практика\Auto\Auto\obj\Debug\net7.0\refint\Auto.dll
 D:\C#\TMS\Практика\Auto\Auto\obj\Debug\net7.0\Auto.pdb
 D:\C#\TMS\Практика\Auto\Auto\obj\Debug\net7.0\Auto.genruntimeconfig.cache
 D:\C#\TMS\Практика\Auto\Auto\obj\Debug\net7.0\ref\Auto.dll
+D:\C#\TMS\Практика\Auto\Auto\bin\Debug\net7.0\userid.json
